@@ -6,6 +6,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import org.hibernate.query.Query;
+import org.mindrot.jbcrypt.BCrypt;
+
 import java.util.List;
 
 public class StudentService {
@@ -38,6 +40,31 @@ public class StudentService {
         session.close();
         return exists;
 
+    }
+    public Student getStudentByEmail(String email) {
+        session = sessionFactory.openSession();
+        session.beginTransaction();
+        Query<Student> query = session.createQuery("FROM Student WHERE email= :email", Student.class);
+        query.setParameter("email", email);
+        Student student = query.uniqueResult();
+        session.getTransaction().commit();
+        session.close();
+        return student;
+    }
+
+    public  boolean login(String email,String password){
+        session=sessionFactory.openSession();
+        session.beginTransaction();
+        Query<Student> query=session.createQuery("FROM Student WHERE email= :email",Student.class);
+        query.setParameter("email", email);
+       Student student=query.uniqueResult();
+       session.getTransaction().commit();
+       session.close();
+        if (student != null) {
+            // Compare stored hashed password with provided password
+            return BCrypt.checkpw(password, student.getPassword());
+        }
+        return false;
     }
 
 }

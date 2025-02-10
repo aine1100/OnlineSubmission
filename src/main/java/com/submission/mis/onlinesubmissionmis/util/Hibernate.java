@@ -23,10 +23,10 @@ public class Hibernate {
             settings.put(Environment.DRIVER, "org.postgresql.Driver");
 //            settings.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
             //Postgresql
-            	settings.put(Environment.URL, "jdbc:postgresql://localhost:3306/myapp");
+            	settings.put(Environment.URL, "jdbc:postgresql://localhost:5432/onlinesubmission");
 //            settings.put(Environment.URL, "jdbc:mysql://localhost:3306/submissiondb");
-            settings.put(Environment.USER, "root");
-            settings.put(Environment.PASS, "root");
+            settings.put(Environment.USER, "postgres");
+            settings.put(Environment.PASS, "aine");
             //PostgreSQL
             settings.put(Environment.DIALECT, "org.hibernate.dialect.PostgreSQLDialect");
 //            settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQLDialect");

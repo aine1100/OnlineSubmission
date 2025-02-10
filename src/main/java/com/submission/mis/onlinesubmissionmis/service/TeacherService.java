@@ -7,6 +7,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import org.hibernate.query.Query;
+import org.mindrot.jbcrypt.BCrypt;
+
 import java.util.List;
 
 public class TeacherService {
@@ -32,13 +34,37 @@ public class TeacherService {
         session=sessionFactory.openSession();
         session.beginTransaction();
 
-        Query<Student> query=session.createQuery("FROM Teacher WHERE email= :email");
+        Query<Teacher> query=session.createQuery("FROM Teacher WHERE email= :email");
         query.setParameter("email", email);
 
         boolean exists=!query.getResultList().isEmpty();
         session.close();
         return exists;
 
+    }
+    public Teacher getTeacherByEmail(String email) {
+        session = sessionFactory.openSession();
+        session.beginTransaction();
+        Query<Teacher> query = session.createQuery("FROM Teacher WHERE email= :email", Teacher.class);
+        query.setParameter("email", email);
+        Teacher teacher = query.uniqueResult();
+        session.getTransaction().commit();
+        session.close();
+        return teacher;
+    }
+    public boolean Login(String email,String password){
+        session=sessionFactory.openSession();
+        session.beginTransaction();
+
+        Query<Teacher> query=session.createQuery("from Teacher WHERE email=:email");
+        query.setParameter("email",email);
+        Teacher teacher=query.uniqueResult();
+        session.getTransaction().commit();
+        session.close();
+        if(teacher !=null){
+            return BCrypt.checkpw(password,teacher.getPassword());
+        }
+        return false;
     }
 
 }

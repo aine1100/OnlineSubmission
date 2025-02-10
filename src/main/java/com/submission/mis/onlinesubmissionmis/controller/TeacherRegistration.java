@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class TeacherRegistration extends HttpServlet {
+    String message;
     TeacherService service=new TeacherService();
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
        PrintWriter out = resp.getWriter();
@@ -26,17 +27,22 @@ public class TeacherRegistration extends HttpServlet {
 
         // Check if email already exists
         if (service.emailExists(email)) {
-            out.print("Email Already Exists or is Used");
-            return;
+            req.setAttribute("message","<p  style='color:red;'>Email already exists or is in use.</p>");
+            req.getRequestDispatcher("/WEB-INF/RegisterForm.jsp").forward(req, resp);
         }
 
         // Create a student object and save it
         Teacher teacher=new Teacher(fname,lname,email,course,hashedPassword);
         service.addTeacher(teacher);
+        req.setAttribute("message","<p  style='color:green;'>Registration successful.</p>");
+
         HttpSession session= req.getSession();
         session.setAttribute("teacher",teacher);
         session.setMaxInactiveInterval(30*60);
         // Redirect to a confirmation page
         req.getRequestDispatcher("/WEB-INF/RegisterForm.jsp").forward(req, resp);
+    }
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("//WEB-INF/RegisterForm.jsp").forward(req,resp);
     }
 }

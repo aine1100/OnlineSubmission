@@ -2,7 +2,7 @@
 
 <html>
 <head>
-    <title>Register</title>
+    <title>Login</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -90,34 +90,20 @@
     </div>
 
 
-    <form action="student-register" method="post">
-        <label for="role">Register as:</label>
+    <form action="student-login" method="post">
+        <label for="role">Login as:</label>
         <select id="role" name="category" onchange="toggleFields()" required>
             <option value="student">Student</option>
             <option value="teacher">Teacher</option>
         </select>
 
-        <label for="fname">First Name</label>
-        <input type="text" id="fname" name="fname" required>
-
-        <label for="lname">Last Name</label>
-        <input type="text" id="lname" name="lname" required>
-
         <label for="email">Email</label>
         <input type="email" id="email" name="email" required>
-
-        <label for="dob">Date of Birth</label>
-        <input type="date" id="dob" name="dob" required>
-
-        <div id="course-group" class="hidden">
-            <label for="course">Course</label>
-            <input type="text" id="course" name="course">
-        </div>
 
         <label for="password">Password</label>
         <input type="password" id="password" name="password" required>
 
-        <button type="submit">Register</button>
+        <button type="submit">Login</button>
     </form>
 
 </div>

@@ -72,4 +72,12 @@ public class Teacher {
     public void setCourse(String course) {
         this.course = course;
     }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

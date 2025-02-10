@@ -67,7 +67,7 @@
     <p>Select an option to continue:</p>
     <div class="btn-group">
         <a class="btn btn-login" onclick="location.href='login.jsp'">Login</a>
-        <a class="btn btn-register" onclick="location.href='register.jsp'">Register</a>
+        <a class="btn btn-register" href="student-register">Register</a>
     </div>
 </div>
 </body>
