@@ -1,4 +1,7 @@
 <%@ page import="jakarta.servlet.http.HttpSession" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.submission.mis.onlinesubmissionmis.model.Assignment" %>
+<%@ page import="com.submission.mis.onlinesubmissionmis.model.Teacher" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
@@ -17,8 +20,13 @@
 <script>
     setTimeout(() => document.getElementById("successMessage").style.display = "none", 3000);
 </script>
-<% sessionObj.removeAttribute("successMessage"); %>
-<% } %>
+<%
+        sessionObj.removeAttribute("successMessage");
+    }
+
+    // Get assignments from request attribute
+    List<Assignment> assignments = (List<Assignment>) request.getAttribute("assignments");
+%>
 
 <div class="flex h-screen">
     <!-- Sidebar -->
@@ -37,22 +45,46 @@
             String studentName = (sessionObj != null) ? (String) sessionObj.getAttribute("studentName") : "Student";
         %>
 
-
         <div class="flex justify-between bg-white p-4 shadow rounded mb-6">
             <h2 class="text-xl font-semibold">Dashboard</h2>
             <div class="text-gray-700">Welcome, <%= studentName %></div>
         </div>
 
-        <!-- Dashboard Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="bg-white p-6 shadow rounded-lg">
-                <h3 class="text-lg font-semibold">Total Assignments</h3>
-                <p class="text-2xl font-bold">5</p>
+        <!-- Assignments List -->
+        <div class="mt-8 bg-white p-6 shadow rounded-lg">
+            <h3 class="text-lg font-semibold mb-4">Your Assignments</h3>
+
+            <% if (assignments != null && !assignments.isEmpty()) {
+                for (Assignment assignment : assignments) {
+                    Teacher teacher = assignment.getTeacher();
+            %>
+            <div class="mb-4 p-4 border rounded-lg hover:bg-gray-50">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h4 class="font-semibold text-lg">
+                            <%= assignment.getTitle() != null ? assignment.getTitle() : "Untitled Assignment" %>
+                        </h4>
+                        <p class="text-gray-600">
+                            <%= assignment.getDescription() != null ? assignment.getDescription() : "No description available" %>
+                        </p>
+                        <div class="mt-2 text-sm text-gray-500">
+                            <span>Course: <%= assignment.getCourse() != null ? assignment.getCourse() : "N/A" %></span>
+                            <% if (teacher != null) { %>
+                            <span class="ml-4">
+                                        Teacher: <%= teacher.getFirstName() %> <%= teacher.getLastName() %>
+                                    </span>
+                            <% } %>
+                        </div>
+                    </div>
+                    <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                        Submit
+                    </button>
+                </div>
             </div>
-            <div class="bg-white p-6 shadow rounded-lg">
-                <h3 class="text-lg font-semibold">Pending Assignments</h3>
-                <p class="text-2xl font-bold">2</p>
-            </div>
+            <% }
+            } else { %>
+            <p class="text-gray-500">No assignments found.</p>
+            <% } %>
         </div>
     </div>
 </div>

@@ -39,6 +39,15 @@
         <servlet-name>TeacherLogin</servlet-name>
         <url-pattern>/teacher-login</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>AssignmentAddition</servlet-name>
+        <servlet-class>com.submission.mis.onlinesubmissionmis.controller.AssignmentController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AssignmentAddition</servlet-name>
+        <url-pattern>/add-assignment</url-pattern>
+    </servlet-mapping>
+
 
 
 

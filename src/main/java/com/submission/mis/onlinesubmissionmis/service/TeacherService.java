@@ -56,7 +56,7 @@ public class TeacherService {
         session=sessionFactory.openSession();
         session.beginTransaction();
 
-        Query<Teacher> query=session.createQuery("from Teacher WHERE email=:email");
+        Query<Teacher> query=session.createQuery("from Teacher WHERE email=:email",Teacher.class);
         query.setParameter("email",email);
         Teacher teacher=query.uniqueResult();
         session.getTransaction().commit();
@@ -65,6 +65,11 @@ public class TeacherService {
             return BCrypt.checkpw(password,teacher.getPassword());
         }
         return false;
+    }
+    public Teacher getTeacherById(int id) {
+        try (Session session = Hibernate.getSessionFactory().openSession()) {
+            return session.get(Teacher.class, id);
+        }
     }
 
 }

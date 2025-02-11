@@ -27,9 +27,12 @@ public class TeacherLogin extends HttpServlet {
         }
         if(service.Login(email,password)){
             HttpSession session = req.getSession();
+
+            Teacher teacher=service.getTeacherByEmail(email);
+            session.setAttribute("teacher", teacher);
             session.setAttribute("email",email);
             session.setAttribute("teacherName", teacher.getFirstName() + " " + teacher.getLastName());
-            session.setAttribute("successMessage","Login successful welcome back ");
+            session.setAttribute("successMessage","Login successful welcome back "+teacher.getFirstName());
             session.setMaxInactiveInterval(30 * 60);
             req.getRequestDispatcher("/WEB-INF/teacherDashboard..jsp").forward(req,res);
         }

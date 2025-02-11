@@ -1,8 +1,11 @@
 package com.submission.mis.onlinesubmissionmis.controller;
 
 import java.io.*;
+import java.util.List;
 
+import com.submission.mis.onlinesubmissionmis.model.Assignment;
 import com.submission.mis.onlinesubmissionmis.model.Student;
+import com.submission.mis.onlinesubmissionmis.service.AssignmentService;
 import com.submission.mis.onlinesubmissionmis.service.StudentService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
@@ -14,6 +17,7 @@ public class StudentLogin extends HttpServlet {
     private String message;
     StudentService service=new StudentService();
     Student student=new Student();
+    AssignmentService assignmentService=new AssignmentService();
 
 
     public  StudentLogin(){}
@@ -21,6 +25,7 @@ public class StudentLogin extends HttpServlet {
        String category=request.getParameter("category");
         String email=request.getParameter("email");
         String password=request.getParameter("password");
+
         if(category.equals("teacher")){
             request.getRequestDispatcher("teacher-login").forward(request,response);
         }

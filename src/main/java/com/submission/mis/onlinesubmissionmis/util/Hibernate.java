@@ -1,5 +1,6 @@
 package com.submission.mis.onlinesubmissionmis.util;
 
+import com.submission.mis.onlinesubmissionmis.model.Assignment;
 import com.submission.mis.onlinesubmissionmis.model.Student;
 import com.submission.mis.onlinesubmissionmis.model.Teacher;
 import org.hibernate.SessionFactory;
@@ -35,6 +36,7 @@ public class Hibernate {
             configuration.setProperties(settings);
             configuration.addAnnotatedClass(Student.class);
             configuration.addAnnotatedClass(Teacher.class);
+            configuration.addAnnotatedClass(Assignment.class);
             ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                     .applySettings(configuration.getProperties()).build();
             sessionFactory = configuration.buildSessionFactory(serviceRegistry);
